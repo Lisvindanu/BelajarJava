@@ -1,0 +1,8 @@
+.tombol {
+  border-radius: 15px;
+}
+
+.tombol:hover {
+  background-color: aqua;
+  color: darkmagenta;
+}
