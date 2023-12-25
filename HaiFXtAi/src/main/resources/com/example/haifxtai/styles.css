@@ -1,0 +1,15 @@
+.big-button {
+    -fx-background-color: #ffcc66;
+    -fx-border-color: #ffcc66;
+    -fx-border-width: 2px;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+}
+
+.big-button:hover {
+    -fx-background-color: #ff9900;
+    -fx-border-color: #ff9900;
+    -fx-cursor: hand;
+}
