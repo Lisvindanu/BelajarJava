@@ -4,6 +4,7 @@ import Tubes.Nasabah;
 import Tubes.util.InputUtil;
 
 import java.io.*;
+import java.util.List;
 import java.util.Scanner;
 
 public class FileNasabahServiceImpl implements FileNasabahService {
@@ -16,6 +17,7 @@ public class FileNasabahServiceImpl implements FileNasabahService {
         System.out.println("2. Baca File Nasabah : ");
         System.out.println("3. Update File : ");
         System.out.println("4. Tambah Record : ");
+        System.out.println("5. Hapus Record : ");
         System.out.println("x. Keluar");
     }
 
@@ -32,11 +34,15 @@ public class FileNasabahServiceImpl implements FileNasabahService {
               Record.setPin(InputUtil.inputInt("Pin"));
               Record.setNama(InputUtil.inputString("Nama"));
               Record.setSaldo(InputUtil.inputDouble("Saldo"));
-                out.writeObject(Record);
-                Record.setNorek(InputUtil.inputInt("Norek"));
+              out.writeObject(Record);
+              Record.setNorek(InputUtil.inputInt("Norek"));
             }
         }catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            if(out != null ){
+                out.close();
+            }
         }
     }
 
@@ -134,57 +140,113 @@ public class FileNasabahServiceImpl implements FileNasabahService {
     }
 
     @Override
-    public void tambahRecord() throws IOException {
-        Nasabah nasabah = new Nasabah();
-        Integer norek, pin;
-        String nama;
-        Double saldo;
+    public void tambahRecord2() throws IOException {
 
+    }
+
+    @Override
+    public void tambahRecord() throws IOException {
         System.out.println("========== Tahap 1 ==========");
         ObjectInputStream in = null;
         ObjectOutputStream out = null;
         int total = 0;
-        Nasabah Record = new Nasabah();
         try {
             in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
-            out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
+            out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat" + ""));
             Object currentRecord = in.readObject();
             try {
-                while (true) {
-                    Record = (Nasabah) currentRecord;
+                while (currentRecord != null) {  // Ubah kondisi looping untuk penanganan EOF
+                    Nasabah Record = (Nasabah) currentRecord;
                     out.writeObject(Record);
                     total++;
                     currentRecord = in.readObject();
                 }
             } catch (EOFException e) {
                 System.out.println("Total Record " + total);
-                Record.setNorek(InputUtil.inputInt("Norek"));
-                Record.setPin(InputUtil.inputInt("Pin"));
-                Record.setNama(InputUtil.inputString("Nama"));
-                Record.setSaldo(InputUtil.inputDouble("Saldo"));
-                out.writeObject(Record);
-                Record.setNorek(InputUtil.inputInt("Norek"));
             }
-            out.close();
-        } catch (IOException e) {
+
+            // Pastikan penulisan data yang ditambahkan
+            Nasabah newRecord = new Nasabah();
+            newRecord.setNorek(InputUtil.inputInt("Norek"));
+            newRecord.setPin(InputUtil.inputInt("Pin"));
+            newRecord.setNama(InputUtil.inputString("Nama"));
+            newRecord.setSaldo(InputUtil.inputDouble("Saldo"));
+            out.writeObject(newRecord);
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        } finally {
+            if (out != null) {
+                out.close();  // Pastikan ObjectOutputStream ditutup
+            }
         }
+
         System.out.println("========== Tahap 2 ==========");
+
         try {
             in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
             out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
-            Object currentRecord = in.readObject();
-            try {
+
+            Nasabah record;
+            while ((record = (Nasabah) in.readObject()) != null) {
+                out.writeObject(record);
+                total++;
+            }
+        } catch (EOFException e) {
+            System.out.println("Total record " + total);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null) {
+                in.close();  // Tutup ObjectInputStream di tahap kedua
+            }
+            if (out != null) {
+                out.close();  // Tutup ObjectOutputStream di tahap kedua
+            }
+        }
+    }
+
+
+    @Override
+    public void hapusRecord() throws IOException {
+        System.out.println("========= TAHAP 1 ==========");
+        ObjectInputStream in = null;
+        ObjectOutputStream out = null;
+        int total = 0;
+        String namaToDelete = InputUtil.inputString("Nama");
+        try{
+            in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
+            out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
+            try{
                 while (true) {
-                    Record = (Nasabah) currentRecord;
-                    out.writeObject(Record);
-                    total++;
-                    currentRecord = in.readObject();
+                    Nasabah Record = (Nasabah) in.readObject();
+                    if (!Record.getNama().equals(namaToDelete)) {
+                        out.writeObject(Record);
+                        total++;
+                    }
                 }
             } catch (EOFException e) {
                 System.out.println("Total record " + total);
+                out.close();
+            } catch (ClassNotFoundException e) {
+                System.out.println("Class Not Found!");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Tahap 2");
+        try {
+            in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
+            out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
+            try{
+                while (true) {
+                    Nasabah Record = (Nasabah) in.readObject();
+                    out.writeObject(Record);
+                    total++;
+                }
+            }catch (EOFException e) {
+                System.out.println("Total record " + total);
+                out.close();
             } catch (ClassNotFoundException e) {
                 System.out.println("Class not Found!");
             } catch (IOException e) {
@@ -193,10 +255,9 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 in.close(); // Menutup ObjectInputStream
                 out.close(); // Menutup ObjectOutputStream di tahap kedua
             }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 }

@@ -26,7 +26,7 @@ public class NasabahView {
             } else if (input.equals("3")) {
                 fileNasabahService.updateData();
             } else if (input.equals("4")) {
-                fileNasabahService.tambahRecord();
+                fileNasabahService.tambahRecord2();
             } else if (input.equals("x")) {
                 break;
             } else {
