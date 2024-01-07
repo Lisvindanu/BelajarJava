@@ -15,8 +15,16 @@ public class UserView {
     }
 
     public void showMenu() throws IOException {
+        fileNasabahService.menu1();
         while (true) {
             var input = InputUtil.inputString("Pilih Menu");
+            if(input.equals("1")) {
+                fileNasabahService.cekSaldo();
+            } else if (input.equals("x")) {
+                break;
+            } else {
+                System.out.println("Pilihan tidak diketahui");
+            }
         }
     }
 }

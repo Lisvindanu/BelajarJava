@@ -140,8 +140,10 @@ public class FileNasabahServiceImpl implements FileNasabahService {
     }
 
     @Override
-    public void tambahRecord2() throws IOException {
-
+    public void menu1() throws IOException {
+        System.out.println("Menu : ");
+        System.out.println("1. Cek Saldo : ");
+        System.out.println("x. Keluar ");
     }
 
     @Override
@@ -260,4 +262,31 @@ public class FileNasabahServiceImpl implements FileNasabahService {
         }
     }
 
+    @Override
+    public void cekSaldo() throws IOException {
+        System.out.println("==========Reading File==========");
+        ObjectInputStream in = null;
+        Nasabah Record = new Nasabah();
+        int total = 0;
+        try{
+            in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
+            Object currentRecord = in.readObject();
+            try{
+                while (true) {
+                    Record = (Nasabah) currentRecord;
+                    System.out.println("Saldo : " + Record.getSaldo());
+                    total++;
+                    currentRecord = in.readObject();
+                }
+            } catch (EOFException e) {
+                System.out.println("Total Record " + total);
+            } catch (ClassNotFoundException e) {
+                System.out.println("Class not Found!");
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (ClassNotFoundException e) {
+            throw  new RuntimeException(e);
+        }
+    }
 }

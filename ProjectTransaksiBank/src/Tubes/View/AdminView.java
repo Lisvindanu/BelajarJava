@@ -23,7 +23,9 @@ public class AdminView {
             } else if (input.equals("3")) {
                 fileNasabahService.updateData();
             } else if (input.equals("4")) {
-                fileNasabahService.tambahRecord2();
+                fileNasabahService.tambahRecord();
+            } else if (input.equals("5")) {
+                fileNasabahService.hapusRecord();
             } else if (input.equals("x")) {
                 break;
             } else {
