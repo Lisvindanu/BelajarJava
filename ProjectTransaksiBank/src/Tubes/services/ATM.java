@@ -26,7 +26,7 @@ public class ATM {
         if(admin.validateCredentials(username, pin)) {
             adminView.showMenu();
         } else if (user.validateCredentials(username, pin)) {
-          userView.showMenu();
+          userView.showMenu1(username);
         }
     }
 }

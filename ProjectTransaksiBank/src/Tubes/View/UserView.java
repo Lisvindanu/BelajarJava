@@ -14,12 +14,12 @@ public class UserView {
         this.fileNasabahService = new FileNasabahServiceImpl();
     }
 
-    public void showMenu() throws IOException {
+    public void showMenu1(String username) throws IOException {
         fileNasabahService.menu1();
         while (true) {
             var input = InputUtil.inputString("Pilih Menu");
             if(input.equals("1")) {
-                fileNasabahService.cekSaldo();
+                fileNasabahService.cekSaldo(username);
             } else if (input.equals("x")) {
                 break;
             } else {

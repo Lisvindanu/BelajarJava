@@ -15,5 +15,5 @@ public interface FileNasabahService {
     void menu1() throws IOException;
 
     void hapusRecord() throws IOException;
-    void cekSaldo() throws IOException;
+    void cekSaldo(String username) throws IOException;
 }

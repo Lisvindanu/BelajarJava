@@ -263,30 +263,42 @@ public class FileNasabahServiceImpl implements FileNasabahService {
     }
 
     @Override
-    public void cekSaldo() throws IOException {
+    public void cekSaldo(String username) throws IOException {
         System.out.println("==========Reading File==========");
         ObjectInputStream in = null;
-        Nasabah Record = new Nasabah();
+        Nasabah Record;
         int total = 0;
-        try{
+        try {
             in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
             Object currentRecord = in.readObject();
-            try{
-                while (true) {
+            try {
+                while (currentRecord != null) {
                     Record = (Nasabah) currentRecord;
-                    System.out.println("Saldo : " + Record.getSaldo());
-                    total++;
+                    if (Record.getNama().equals(username)) {
+                        System.out.println("Hai "+  Record.getNama() + " "  + "Saldo Kamu : " + Record.getSaldo());
+                        total++;
+                    }
                     currentRecord = in.readObject();
                 }
-            } catch (EOFException e) {
                 System.out.println("Total Record " + total);
             } catch (ClassNotFoundException e) {
                 System.out.println("Class not Found!");
-            }catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (EOFException e) {
+            System.out.println("Total Record " + total);
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
+
 }
