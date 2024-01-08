@@ -143,6 +143,7 @@ public class FileNasabahServiceImpl implements FileNasabahService {
     public void menu1() throws IOException {
         System.out.println("Menu : ");
         System.out.println("1. Cek Saldo : ");
+        System.out.println("2. Transfer : ");
         System.out.println("x. Keluar ");
     }
 
@@ -295,6 +296,79 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 try {
                     in.close();
                 } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void transfer(String pengirim, String penerima, Double jumlahTransfer, Integer pinPengirim) throws IOException {
+
+
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
+        ) {
+            boolean pengirimDitemukan = false;
+            boolean penerimaDitemukan = false;
+
+            while (true) {
+                try {
+                    Nasabah nasabah = (Nasabah) in.readObject();
+
+                    if (nasabah.getNama().equals(pengirim)) {
+                        pengirimDitemukan = true;
+
+                        if (!nasabah.getPin().equals(pinPengirim)) {
+                            System.out.println("PIN yang dimasukkan salah untuk pengirim.");
+                            return;
+                        }
+
+                        double saldoPengirim = nasabah.getSaldo();
+                        if (saldoPengirim >= jumlahTransfer) {
+                            nasabah.setSaldo(saldoPengirim - jumlahTransfer);
+                        } else {
+                            System.out.println("Saldo tidak mencukupi untuk pengirim.");
+                            return;
+                        }
+                    }
+
+                    if (nasabah.getNama().equals(penerima)) {
+                        penerimaDitemukan = true;
+                        double saldoPenerima = nasabah.getSaldo();
+                        nasabah.setSaldo(saldoPenerima + jumlahTransfer);
+                    }
+
+                    out.writeObject(nasabah);
+                } catch (EOFException e) {
+                    break;
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (!pengirimDitemukan || !penerimaDitemukan) {
+                System.out.println("Pengirim atau penerima tidak ditemukan.");
+                return;
+            }
+        }
+
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
+        ) {
+            while (true) {
+                try {
+                    Object currentRecord = in.readObject();
+                    if (currentRecord != null) {
+                        out.writeObject(currentRecord);
+                    } else {
+                        break;
+                    }
+                } catch (EOFException e) {
+                    break;
+                } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }

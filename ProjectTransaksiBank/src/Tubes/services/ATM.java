@@ -13,6 +13,10 @@ public class ATM {
     private User user;
     private AdminView adminView;
     private UserView userView;
+    private Double jumlahTransfer;
+    private String pengirim;
+    private String penerima;
+    private Integer pinPengirim;
 
     public ATM( String userNama, String userPin) {
         this.fileNasabahService = new FileNasabahServiceImpl();

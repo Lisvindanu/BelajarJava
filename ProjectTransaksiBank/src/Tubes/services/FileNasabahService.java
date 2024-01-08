@@ -16,4 +16,6 @@ public interface FileNasabahService {
 
     void hapusRecord() throws IOException;
     void cekSaldo(String username) throws IOException;
+
+    void transfer(String pengirim, String penerima, Double jumlahTransfer, Integer pinPengirim) throws IOException;
 }
