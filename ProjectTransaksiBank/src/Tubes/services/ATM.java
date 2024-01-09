@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2024. Create with strugle. Lisvindanu
+ */
+
 package Tubes.services;
 
 import Tubes.Entity.Admin;
