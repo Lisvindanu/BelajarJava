@@ -1,5 +1,7 @@
 package Tubes.Entity;
 
+import Tubes.util.InputUtil;
+
 import java.util.Scanner;
 
 public class Nasabah implements java.io.Serializable {
@@ -8,6 +10,7 @@ public class Nasabah implements java.io.Serializable {
     Integer norek, pin;
     String nama;
     Double saldo;
+    private Integer newPin;
 
     public Nasabah() {
         this.norek = norek;

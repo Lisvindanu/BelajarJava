@@ -1,6 +1,4 @@
-/*
- * Copyright (c) 2024. Create with strugle. Lisvindanu
- */
+
 
 package Tubes.services;
 
@@ -21,11 +19,19 @@ public class ATM {
     private String pengirim;
     private String penerima;
     private Integer pinPengirim;
+    private Integer newPin;
 
     public ATM( String userNama, String userPin) {
-        this.fileNasabahService = new FileNasabahServiceImpl();
+        this.fileNasabahService = new FileNasabahServiceImpl() {
+            @Override
+            public Double tarikTunai(String username, Double amount) {
+
+                return amount;
+            }
+        };
         this.admin = new Admin();
         this.user = new User(userNama, userPin);
+        this.user.setNewPin(Integer.parseInt(userPin));
         this.adminView = new AdminView();
         this.userView = new UserView();
     }

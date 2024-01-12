@@ -44,7 +44,8 @@ public class FileNasabahServiceTest {
 
 
     public static void testSaveToFile() {
-        FileNasabahService fileNasabahService = new FileNasabahServiceImpl();
+        FileNasabahService fileNasabahService;
+        fileNasabahService = new FileNasabahServiceImpl();
         try{
             fileNasabahService.saveToFile();
         }catch (IOException e) {
@@ -54,7 +55,7 @@ public class FileNasabahServiceTest {
     }
 
     public static void testBacaFileNasabah() {
-        FileNasabahService fileNasabahService = new FileNasabahServiceImpl();
+        FileNasabahService fileNasabahService = null;
         try {
             fileNasabahService.bacaFileNasabah();
         }catch (IOException e) {

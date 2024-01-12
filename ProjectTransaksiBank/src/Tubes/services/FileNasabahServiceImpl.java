@@ -1,6 +1,4 @@
-/*
- * Copyright (c) 2024. Create with strugle. Lisvindanu
- */
+
 
 package Tubes.services;
 
@@ -8,8 +6,6 @@ import Tubes.Nasabah;
 import Tubes.util.InputUtil;
 
 import java.io.*;
-import java.util.List;
-import java.util.Scanner;
 
 public class FileNasabahServiceImpl implements FileNasabahService {
 
@@ -35,16 +31,16 @@ public class FileNasabahServiceImpl implements FileNasabahService {
             out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
             Record.setNorek(InputUtil.inputInt("Norek"));
             while (Record.getNorek() != 999) {
-              Record.setPin(InputUtil.inputInt("Pin"));
-              Record.setNama(InputUtil.inputString("Nama"));
-              Record.setSaldo(InputUtil.inputDouble("Saldo"));
-              out.writeObject(Record);
-              Record.setNorek(InputUtil.inputInt("Norek"));
+                Record.setPin(InputUtil.inputInt("Pin"));
+                Record.setNama(InputUtil.inputString("Nama"));
+                Record.setSaldo(InputUtil.inputDouble("Saldo"));
+                out.writeObject(Record);
+                Record.setNorek(InputUtil.inputInt("Norek"));
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if(out != null ){
+        } finally {
+            if (out != null) {
                 out.close();
             }
         }
@@ -56,10 +52,10 @@ public class FileNasabahServiceImpl implements FileNasabahService {
         ObjectInputStream in = null;
         Nasabah Record = new Nasabah();
         int total = 0;
-        try{
+        try {
             in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
             Object currentRecord = in.readObject();
-            try{
+            try {
                 while (true) {
                     Record = (Nasabah) currentRecord;
                     System.out.println("Norek : " + Record.getNorek());
@@ -73,11 +69,11 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 System.out.println("Total Record " + total);
             } catch (ClassNotFoundException e) {
                 System.out.println("Class not Found!");
-            }catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } catch (ClassNotFoundException e) {
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
 
     }
@@ -148,9 +144,14 @@ public class FileNasabahServiceImpl implements FileNasabahService {
         System.out.println("Menu : ");
         System.out.println("1. Cek Saldo : ");
         System.out.println("2. Transfer : ");
+        System.out.println("3. Ubah Pin: ");
+        System.out.println("4. Tarik Tunai: ");
+        System.out.println("5. Setor Tunai: ");
+        System.out.println("6. Top Up E-Wallet: ");
+        System.out.println("7. Bayar Token Listrik: ");
+        System.out.println("8. Bayar PDAM: ");
         System.out.println("x. Keluar ");
     }
-
     @Override
     public void tambahRecord() throws IOException {
         System.out.println("========== Tahap 1 ==========");
@@ -220,10 +221,10 @@ public class FileNasabahServiceImpl implements FileNasabahService {
         ObjectOutputStream out = null;
         int total = 0;
         String namaToDelete = InputUtil.inputString("Nama");
-        try{
+        try {
             in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
             out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
-            try{
+            try {
                 while (true) {
                     Nasabah Record = (Nasabah) in.readObject();
                     if (!Record.getNama().equals(namaToDelete)) {
@@ -245,13 +246,13 @@ public class FileNasabahServiceImpl implements FileNasabahService {
         try {
             in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
             out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
-            try{
+            try {
                 while (true) {
                     Nasabah Record = (Nasabah) in.readObject();
                     out.writeObject(Record);
                     total++;
                 }
-            }catch (EOFException e) {
+            } catch (EOFException e) {
                 System.out.println("Total record " + total);
                 out.close();
             } catch (ClassNotFoundException e) {
@@ -280,7 +281,7 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 while (currentRecord != null) {
                     Record = (Nasabah) currentRecord;
                     if (Record.getNama().equals(username)) {
-                        System.out.println("Hai "+  Record.getNama() + " "  + "Saldo Kamu : " + Record.getSaldo());
+                        System.out.println("Hai " + Record.getNama() + " " + "Saldo Kamu : " + Record.getSaldo());
                         total++;
                     }
                     currentRecord = in.readObject();
@@ -379,4 +380,319 @@ public class FileNasabahServiceImpl implements FileNasabahService {
         }
     }
 
+    @Override
+    public void tariktunai() throws IOException {
+
+    }
+
+    @Override
+    public void ubahPin(String username, Integer newPin) throws IOException {
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\Java-Alpro2\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\Java-Alpro2\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
+        ) {
+            while (true) {
+                try {
+                    Nasabah nasabah = (Nasabah) in.readObject();
+
+                    if (nasabah.getNama().equals(username)) {
+                        nasabah.setPin(newPin);
+                        System.out.println("PIN berhasil diubah.");
+                    }
+
+                    out.writeObject(nasabah);
+                } catch (EOFException e) {
+                    break;
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\Java-Alpro2\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\Java-Alpro2\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
+        ) {
+            while (true) {
+                try {
+                    Object currentRecord = in.readObject();
+                    if (currentRecord != null) {
+                        out.writeObject(currentRecord);
+                    } else {
+                        break;
+                    }
+                } catch (EOFException e) {
+                    break;
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updatePin(String username, Integer newPin) {
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
+        ) {
+            Nasabah nasabah;
+            while ((nasabah = (Nasabah) in.readObject()) != null) {
+                if (nasabah.getNama().equals(username)) {
+                    nasabah.setPin(newPin);
+                }
+                out.writeObject(nasabah);
+            }
+        } catch (EOFException e) {
+            // End of file reached
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
+        ) {
+            Nasabah nasabah;
+            while ((nasabah = (Nasabah) in.readObject()) != null) {
+                out.writeObject(nasabah);
+            }
+        } catch (EOFException e) {
+            // End of file reached
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Double tarikTunai(String username, Double jumlah) {
+        Double saldoBaru = null;
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
+        ) {
+            Nasabah nasabah;
+            while ((nasabah = (Nasabah) in.readObject()) != null) {
+                if (nasabah.getNama().equals(username)) {
+                    if (nasabah.getSaldo() >= jumlah) {
+                        saldoBaru = nasabah.getSaldo() - jumlah;
+                        nasabah.setSaldo(saldoBaru);
+                    } else {
+                        System.out.println("Saldo Anda tidak cukup.");
+                        return null;
+                    }
+                }
+                out.writeObject(nasabah);
+            }
+        } catch (EOFException e) {
+            // Akhir file tercapai
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
+        ) {
+            Nasabah nasabah;
+            while ((nasabah = (Nasabah) in.readObject()) != null) {
+                out.writeObject(nasabah);
+            }
+        } catch (EOFException e) {
+            // Akhir file tercapai
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return saldoBaru;
+    }
+    @Override
+    public void setorTunai(String username, Double jumlah) {
+        if (jumlah < 50000) {
+            System.out.println("Maaf, jumlah setoran minimal adalah 50000.");
+            return;
+        }
+
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
+        ) {
+            Nasabah nasabah;
+            while ((nasabah = (Nasabah) in.readObject()) != null) {
+                if (nasabah.getNama().equals(username)) {
+                    Double saldoBaru = nasabah.getSaldo() + jumlah;
+                    nasabah.setSaldo(saldoBaru);
+                    System.out.println("Proses berhasil. Saldo Anda sekarang adalah: " + saldoBaru);
+                }
+                out.writeObject(nasabah);
+            }
+        } catch (EOFException e) {
+            // Akhir file tercapai
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
+        ) {
+            Nasabah nasabah;
+            while ((nasabah = (Nasabah) in.readObject()) != null) {
+                out.writeObject(nasabah);
+            }
+        } catch (EOFException e) {
+            // Akhir file tercapai
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void topUpEwallet(String username, String noEwallet, Double jumlah, int pin) {
+        // Cek apakah jumlah top up kurang dari 10000
+        if (jumlah < 10000) {
+            System.out.println("Pembayaran gagal, jumlah minimal top up e-wallet adalah 10000.");
+            return;
+        }
+
+        // Baca objek Nasabah dari file
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
+        ) {
+            Nasabah nasabah;
+            while ((nasabah = (Nasabah) in.readObject()) != null) {
+                // Jika username cocok, kurangi jumlah dari saldo
+                if (nasabah.getNama().equals(username)) {
+                    if (nasabah.getSaldo() >= jumlah) {
+                        Double saldoBaru = nasabah.getSaldo() - jumlah;
+                        nasabah.setSaldo(saldoBaru);
+                        System.out.println("Pembayaran berhasil. Saldo Anda sekarang adalah " + saldoBaru);
+                    } else {
+                        System.out.println("Saldo Anda tidak cukup.");
+                        return;
+                    }
+                }
+                // Tulis objek Nasabah (diperbarui atau tidak) ke file sementara
+                out.writeObject(nasabah);
+            }
+        } catch (EOFException e) {
+            // Akhir file tercapai
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Salin isi file sementara kembali ke file asli
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
+        ) {
+            Nasabah nasabah;
+            while ((nasabah = (Nasabah) in.readObject()) != null) {
+                out.writeObject(nasabah);
+            }
+        } catch (EOFException e) {
+            // Akhir file tercapai
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void bayarTokenListrik(String username, String noMeter, String noHp, Double jumlah, int pin) {
+        // Cek apakah jumlah pembayaran kurang dari 20000
+        if (jumlah < 20000) {
+            System.out.println("Pembayaran gagal, jumlah minimal pembayaran token listrik adalah 20000.");
+            return;
+        }
+
+        // Baca objek Nasabah dari file
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
+        ) {
+            Nasabah nasabah;
+            while ((nasabah = (Nasabah) in.readObject()) != null) {
+                // Jika username cocok, kurangi jumlah dari saldo
+                if (nasabah.getNama().equals(username)) {
+                    if (nasabah.getSaldo() >= jumlah) {
+                        Double saldoBaru = nasabah.getSaldo() - jumlah;
+                        nasabah.setSaldo(saldoBaru);
+                        System.out.println("Pembayaran berhasil. Token akan dikirim ke nomor HP " + noHp + "sisa saldo anda adalah" +saldoBaru);
+                    } else {
+                        System.out.println("Saldo Anda tidak cukup.");
+                        return;
+                    }
+                }
+                // Tulis objek Nasabah (diperbarui atau tidak) ke file sementara
+                out.writeObject(nasabah);
+            }
+        } catch (EOFException e) {
+            // Akhir file tercapai
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Salin isi file sementara kembali ke file asli
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
+        ) {
+            Nasabah nasabah;
+            while ((nasabah = (Nasabah) in.readObject()) != null) {
+                out.writeObject(nasabah);
+            }
+        } catch (EOFException e) {
+            // Akhir file tercapai
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void bayarPDAM(String username, String noPelanggan, String namaPemilik, Double jumlah, int pin) {
+        // Baca objek Nasabah dari file
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
+        ) {
+            Nasabah nasabah;
+            while ((nasabah = (Nasabah) in.readObject()) != null) {
+                // Jika username cocok, kurangi jumlah dari saldo
+                if (nasabah.getNama().equals(username)) {
+                    if (nasabah.getSaldo() >= jumlah) {
+                        Double saldoBaru = nasabah.getSaldo() - jumlah;
+                        nasabah.setSaldo(saldoBaru);
+                        System.out.println("Pembayaran berhasil. Saldo Anda sekarang adalah " + saldoBaru);
+                    } else {
+                        System.out.println("Saldo Anda tidak cukup.");
+                        return;
+                    }
+                }
+                // Tulis objek Nasabah (diperbarui atau tidak) ke file sementara
+                out.writeObject(nasabah);
+            }
+        } catch (EOFException e) {
+            // Akhir file tercapai
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Salin isi file sementara kembali ke file asli
+        try (
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
+        ) {
+            Nasabah nasabah;
+            while ((nasabah = (Nasabah) in.readObject()) != null) {
+                out.writeObject(nasabah);
+            }
+        } catch (EOFException e) {
+            // Akhir file tercapai
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+
+
+

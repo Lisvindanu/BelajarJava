@@ -60,4 +60,7 @@ public class Nasabah implements java.io.Serializable {
     public void setSaldo(Double saldo) {
         this.saldo = saldo;
     }
+
+    public void setNewPin(Integer newPin) {
+    }
 }

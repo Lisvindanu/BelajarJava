@@ -32,4 +32,7 @@ public class User implements Role {
         }
         return false;
     }
+
+    public void setNewPin(int i) {
+    }
 }
