@@ -1,6 +1,10 @@
+/*
+ * Copyright (c) 2024. Create with strugle. Lisvindanu and Rafli Ramdhani
+ */
+
 package Tubes.Entity;
 
-import Tubes.Nasabah;
+import Tubes.Entity.nasabah;
 
 import java.io.EOFException;
 import java.io.FileInputStream;
@@ -19,8 +23,8 @@ public class User implements Role {
     @Override
     public boolean validateCredentials(String username, String pin) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))){
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) != null) {
+            nasabah nasabah;
+            while ((nasabah = (nasabah) in.readObject()) != null) {
                 if(nasabah.getNama().equals(username) && nasabah.getPin().toString().equals(pin)) {
                     return true;
                 }

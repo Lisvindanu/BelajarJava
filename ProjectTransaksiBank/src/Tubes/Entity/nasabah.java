@@ -1,15 +1,16 @@
-package Tubes;
+package Tubes.Entity;
 
 import java.util.Scanner;
 
-public class Nasabah implements java.io.Serializable {
+public class nasabah implements java.io.Serializable {
 
     private static final long serialVersionUID = 748864630665568472L;
     Integer norek, pin;
     String nama;
     Double saldo;
+    private Integer newPin;
 
-    public Nasabah() {
+    public nasabah() {
         this.norek = norek;
         this.pin = pin;
         this.nama = nama;
@@ -29,19 +30,19 @@ public class Nasabah implements java.io.Serializable {
         System.out.println(norek + ", " + pin + ", " + nama + ", " + saldo + ", ");
     }
 
-     public Integer getNorek() {
+    public Integer getNorek() {
         return norek;
     }
 
-     public Integer getPin() {
+    public Integer getPin() {
         return pin;
     }
 
-     public String getNama() {
+    public String getNama() {
         return nama;
     }
 
-     public Double getSaldo() {
+    public Double getSaldo() {
         return saldo;
     }
 
@@ -59,8 +60,5 @@ public class Nasabah implements java.io.Serializable {
 
     public void setSaldo(Double saldo) {
         this.saldo = saldo;
-    }
-
-    public void setNewPin(Integer newPin) {
     }
 }

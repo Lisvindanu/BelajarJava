@@ -1,6 +1,10 @@
+/*
+ * Copyright (c) 2024. Create with strugle. Lisvindanu and Rafli Ramdhani
+ */
+
 package Tubes.services;
 
-import Tubes.Nasabah;
+import Tubes.Entity.nasabah;
 import Tubes.util.InputUtil;
 
 import java.io.EOFException;
@@ -15,8 +19,8 @@ public class Login {
         String userName = null;
         String userPin = null;
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\\\LearnJava\\\\ProjectTransaksiBank\\\\src\\\\Tubes\\\\DatFile\\\\Nasabah.dat"))){
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) !=null) {
+            nasabah nasabah;
+            while ((nasabah = (nasabah) in.readObject()) !=null) {
                 userName = nasabah.getNama();
                 userPin = nasabah.getPin().toString();
             }

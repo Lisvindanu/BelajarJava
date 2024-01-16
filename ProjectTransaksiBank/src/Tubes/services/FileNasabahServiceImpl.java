@@ -1,8 +1,12 @@
 
 
+/*
+ * Copyright (c) 2024. Create with strugle. Lisvindanu and Rafli Ramdhani
+ */
+
 package Tubes.services;
 
-import Tubes.Nasabah;
+import Tubes.Entity.*;
 import Tubes.util.InputUtil;
 
 import java.io.*;
@@ -23,7 +27,7 @@ public class FileNasabahServiceImpl implements FileNasabahService {
 
     @Override
     public void saveToFile() throws IOException {
-        Nasabah Record = new Nasabah();
+        nasabah Record = new nasabah();
         System.out.println("==========SAVE TO FILE==========");
         ObjectOutputStream out = null;
 
@@ -50,14 +54,14 @@ public class FileNasabahServiceImpl implements FileNasabahService {
     public void bacaFileNasabah() throws IOException {
         System.out.println("==========Reading File==========");
         ObjectInputStream in = null;
-        Nasabah Record = new Nasabah();
+        nasabah Record = new nasabah();
         int total = 0;
         try {
             in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
             Object currentRecord = in.readObject();
             try {
                 while (true) {
-                    Record = (Nasabah) currentRecord;
+                    Record = (nasabah) currentRecord;
                     System.out.println("Norek : " + Record.getNorek());
                     System.out.println("Pin : " + Record.getPin());
                     System.out.println("Nama : " + Record.getNama());
@@ -84,7 +88,7 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
         ) {
-            Nasabah Record;
+            nasabah Record;
             int total = 0;
 
             System.out.println("==========Tahap 1==========");
@@ -95,7 +99,7 @@ public class FileNasabahServiceImpl implements FileNasabahService {
 
             try {
                 while (true) {
-                    Record = (Nasabah) in.readObject();
+                    Record = (nasabah) in.readObject();
                     if (Record.getNorek().equals(NorekCari)) {
                         Record.setPin(PinBaru);
                     }
@@ -118,12 +122,12 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
         ) {
             int total = 0;
-            Nasabah Record;
+            nasabah Record;
 
             System.out.println("==========Tahap 2==========");
             try {
                 while (true) {
-                    Record = (Nasabah) in.readObject();
+                    Record = (nasabah) in.readObject();
                     out.writeObject(Record);
                     total++;
                 }
@@ -164,7 +168,7 @@ public class FileNasabahServiceImpl implements FileNasabahService {
             Object currentRecord = in.readObject();
             try {
                 while (currentRecord != null) {  // Ubah kondisi looping untuk penanganan EOF
-                    Nasabah Record = (Nasabah) currentRecord;
+                    nasabah Record = (nasabah) currentRecord;
                     out.writeObject(Record);
                     total++;
                     currentRecord = in.readObject();
@@ -174,7 +178,7 @@ public class FileNasabahServiceImpl implements FileNasabahService {
             }
 
             // Pastikan penulisan data yang ditambahkan
-            Nasabah newRecord = new Nasabah();
+            nasabah newRecord = new nasabah();
             newRecord.setNorek(InputUtil.inputInt("Norek"));
             newRecord.setPin(InputUtil.inputInt("Pin"));
             newRecord.setNama(InputUtil.inputString("Nama"));
@@ -194,8 +198,8 @@ public class FileNasabahServiceImpl implements FileNasabahService {
             in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
             out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
 
-            Nasabah record;
-            while ((record = (Nasabah) in.readObject()) != null) {
+            nasabah record;
+            while ((record = (nasabah) in.readObject()) != null) {
                 out.writeObject(record);
                 total++;
             }
@@ -220,14 +224,14 @@ public class FileNasabahServiceImpl implements FileNasabahService {
         ObjectInputStream in = null;
         ObjectOutputStream out = null;
         int total = 0;
-        String namaToDelete = InputUtil.inputString("Nama");
+        Integer norekToDelete = InputUtil.inputInt("Norek");
         try {
             in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
             out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
             try {
                 while (true) {
-                    Nasabah Record = (Nasabah) in.readObject();
-                    if (!Record.getNama().equals(namaToDelete)) {
+                    nasabah Record = (nasabah) in.readObject();
+                    if (!Record.getNorek().equals(norekToDelete)) {
                         out.writeObject(Record);
                         total++;
                     }
@@ -248,7 +252,7 @@ public class FileNasabahServiceImpl implements FileNasabahService {
             out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
             try {
                 while (true) {
-                    Nasabah Record = (Nasabah) in.readObject();
+                    nasabah Record = (nasabah) in.readObject();
                     out.writeObject(Record);
                     total++;
                 }
@@ -272,14 +276,14 @@ public class FileNasabahServiceImpl implements FileNasabahService {
     public void cekSaldo(String username) throws IOException {
         System.out.println("==========Reading File==========");
         ObjectInputStream in = null;
-        Nasabah Record;
+        nasabah Record;
         int total = 0;
         try {
             in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
             Object currentRecord = in.readObject();
             try {
                 while (currentRecord != null) {
-                    Record = (Nasabah) currentRecord;
+                    Record = (nasabah) currentRecord;
                     if (Record.getNama().equals(username)) {
                         System.out.println("Hai " + Record.getNama() + " " + "Saldo Kamu : " + Record.getSaldo());
                         total++;
@@ -320,7 +324,7 @@ public class FileNasabahServiceImpl implements FileNasabahService {
 
             while (true) {
                 try {
-                    Nasabah nasabah = (Nasabah) in.readObject();
+                    nasabah nasabah = (Tubes.Entity.nasabah) in.readObject();
 
                     if (nasabah.getNama().equals(pengirim)) {
                         pengirimDitemukan = true;
@@ -393,7 +397,7 @@ public class FileNasabahServiceImpl implements FileNasabahService {
         ) {
             while (true) {
                 try {
-                    Nasabah nasabah = (Nasabah) in.readObject();
+                    nasabah nasabah = (Tubes.Entity.nasabah) in.readObject();
 
                     if (nasabah.getNama().equals(username)) {
                         nasabah.setPin(newPin);
@@ -438,8 +442,8 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
         ) {
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) != null) {
+            nasabah nasabah;
+            while ((nasabah = (Tubes.Entity.nasabah) in.readObject()) != null) {
                 if (nasabah.getNama().equals(username)) {
                     nasabah.setPin(newPin);
                 }
@@ -455,8 +459,8 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
         ) {
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) != null) {
+            nasabah nasabah;
+            while ((nasabah = (Tubes.Entity.nasabah) in.readObject()) != null) {
                 out.writeObject(nasabah);
             }
         } catch (EOFException e) {
@@ -473,8 +477,8 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
         ) {
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) != null) {
+            nasabah nasabah;
+            while ((nasabah = (Tubes.Entity.nasabah) in.readObject()) != null) {
                 if (nasabah.getNama().equals(username)) {
                     if (nasabah.getSaldo() >= jumlah) {
                         saldoBaru = nasabah.getSaldo() - jumlah;
@@ -496,8 +500,8 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
         ) {
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) != null) {
+            nasabah nasabah;
+            while ((nasabah = (Tubes.Entity.nasabah) in.readObject()) != null) {
                 out.writeObject(nasabah);
             }
         } catch (EOFException e) {
@@ -518,8 +522,8 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
         ) {
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) != null) {
+            nasabah nasabah;
+            while ((nasabah = (Tubes.Entity.nasabah) in.readObject()) != null) {
                 if (nasabah.getNama().equals(username)) {
                     Double saldoBaru = nasabah.getSaldo() + jumlah;
                     nasabah.setSaldo(saldoBaru);
@@ -537,8 +541,8 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
         ) {
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) != null) {
+            nasabah nasabah;
+            while ((nasabah = (Tubes.Entity.nasabah) in.readObject()) != null) {
                 out.writeObject(nasabah);
             }
         } catch (EOFException e) {
@@ -560,8 +564,8 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
         ) {
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) != null) {
+            nasabah nasabah;
+            while ((nasabah = (Tubes.Entity.nasabah) in.readObject()) != null) {
                 // Jika username cocok, kurangi jumlah dari saldo
                 if (nasabah.getNama().equals(username)) {
                     if (nasabah.getSaldo() >= jumlah) {
@@ -587,8 +591,8 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
         ) {
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) != null) {
+            nasabah nasabah;
+            while ((nasabah = (Tubes.Entity.nasabah) in.readObject()) != null) {
                 out.writeObject(nasabah);
             }
         } catch (EOFException e) {
@@ -610,8 +614,8 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
         ) {
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) != null) {
+            nasabah nasabah;
+            while ((nasabah = (Tubes.Entity.nasabah) in.readObject()) != null) {
                 // Jika username cocok, kurangi jumlah dari saldo
                 if (nasabah.getNama().equals(username)) {
                     if (nasabah.getSaldo() >= jumlah) {
@@ -637,8 +641,8 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
         ) {
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) != null) {
+            nasabah nasabah;
+            while ((nasabah = (Tubes.Entity.nasabah) in.readObject()) != null) {
                 out.writeObject(nasabah);
             }
         } catch (EOFException e) {
@@ -654,8 +658,8 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"));
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"))
         ) {
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) != null) {
+            nasabah nasabah;
+            while ((nasabah = (Tubes.Entity.nasabah) in.readObject()) != null) {
                 // Jika username cocok, kurangi jumlah dari saldo
                 if (nasabah.getNama().equals(username)) {
                     if (nasabah.getSaldo() >= jumlah) {
@@ -681,8 +685,8 @@ public class FileNasabahServiceImpl implements FileNasabahService {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\temp.dat"));
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))
         ) {
-            Nasabah nasabah;
-            while ((nasabah = (Nasabah) in.readObject()) != null) {
+            nasabah nasabah;
+            while ((nasabah = (Tubes.Entity.nasabah) in.readObject()) != null) {
                 out.writeObject(nasabah);
             }
         } catch (EOFException e) {

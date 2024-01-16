@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2024. Create with strugle. Lisvindanu and Rafli Ramdhani
+ */
+
 package Tubes.util;
 
 import java.util.Scanner;
