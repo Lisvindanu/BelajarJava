@@ -26,5 +26,11 @@ public class LingkaranMain {
         lingkaran1.Show();
         if(lingkaran2 != null) lingkaran2.Show();
         lingkaran3.Show();
+        ubahNilai(lingkaran1);
+        lingkaran1.Show();
+    }
+
+    public static void ubahNilai(Lingkaran obj) {
+        obj.setNilai(100);
     }
 }
