@@ -4,7 +4,7 @@
  * @Since 29-02-2024
  */
 
-package Pertemuan3;
+package Pertemuan4;
 
 public class Student {
     String nrp;
