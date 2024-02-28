@@ -2,6 +2,10 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/BelajarJavaDasar" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Java-Generic" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/PemrogramanBerorientasiObjek" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/oopJava" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/untitled" vcs="Git" />
   </component>
 </project>

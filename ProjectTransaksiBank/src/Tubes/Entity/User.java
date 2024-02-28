@@ -1,16 +1,13 @@
 /*
  * Copyright (c) 2024. Create with strugle. Lisvindanu and Rafli Ramdhani
  */
-
 package Tubes.Entity;
-
 import Tubes.Entity.nasabah;
 
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-
 public class User implements Role {
     private String nama;
     private String pin;
@@ -19,7 +16,6 @@ public class User implements Role {
         this.nama = nama;
         this.pin = pin;
     }
-
     @Override
     public boolean validateCredentials(String username, String pin) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\LearnJava\\ProjectTransaksiBank\\src\\Tubes\\DatFile\\Nasabah.dat"))){
@@ -36,7 +32,6 @@ public class User implements Role {
         }
         return false;
     }
-
     public void setNewPin(int i) {
     }
 }
