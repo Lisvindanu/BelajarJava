@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../JavaProject/Menelaah/Menelaah.iml" filepath="$PROJECT_DIR$/../../JavaProject/Menelaah/Menelaah.iml" />
       <module fileurl="file://$PROJECT_DIR$/PraktikumPemrograman1.iml" filepath="$PROJECT_DIR$/PraktikumPemrograman1.iml" />
     </modules>
   </component>
