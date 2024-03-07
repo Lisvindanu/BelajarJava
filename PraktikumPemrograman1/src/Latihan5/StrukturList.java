@@ -101,6 +101,32 @@ public class StrukturList {
             }
         }
     }
+    public void removeHead() {
+        if (isEmpty()) {
+            System.out.println("List Kosong");
+        } else {
+            Node temp = head;
+            head = head.getNext();
+            dispose(temp);
+        }
+    }
+
+    public void removeTail() {
+        Node preNode = null, lastNode;
+        if(head != null) {
+           if(head.getNext() == null) {
+               head = null;
+           } else {
+               lastNode = head;
+               while(lastNode.getNext() != null) {
+                   preNode = lastNode;
+                   lastNode = lastNode.getNext();
+               }preNode.setNext(null);
+               dispose(lastNode);
+
+           }
+        }
+    }
 
 
 

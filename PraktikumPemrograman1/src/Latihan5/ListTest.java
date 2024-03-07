@@ -7,19 +7,36 @@ package Latihan5;
 
 public class ListTest {
     public static void main(String[] args) {
-        StrukturList newList = new StrukturList();
-        newList.addTail(6);
-        newList.addTail(1);
-        newList.addMiddle(3,2);
-        newList.addMiddle(5,2);
-        newList.addHead(2);
-        newList.displayElement();
-
-        newList.removeMid(3);
-        newList.removeMid(6);
-        newList.removeMid(5);
+        StrukturList newListDeleteHead = new StrukturList();
+        System.out.println("Remove head");
+        newListDeleteHead.addHead(7);
+        newListDeleteHead.addTail(9);
+        newListDeleteHead.addTail(2);
+        newListDeleteHead.displayElement();
         System.out.println();
-        newList.displayElement();
+        newListDeleteHead.removeHead();
+        newListDeleteHead.displayElement();
+        System.out.println();
+
+    StrukturList newListDeleteTail = new StrukturList();
+        System.out.println("remove tail");
+        newListDeleteTail.addTail(2);
+        newListDeleteTail.addTail(6);
+        newListDeleteTail.addTail(3);
+        newListDeleteTail.addTail(5);
+        newListDeleteTail.addTail(1);
+        newListDeleteTail.displayElement();
+        newListDeleteTail.removeTail();
+        System.out.println();
+        newListDeleteTail.displayElement();
+        newListDeleteTail.removeTail();
+        System.out.println();
+        newListDeleteTail.displayElement();
+        newListDeleteTail.removeHead();
+        System.out.println();
+        newListDeleteTail.displayElement();
+
+//        newList.displayElement();
 
 
 
