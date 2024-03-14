@@ -2,7 +2,11 @@
  * Author : Lisvindanu
  */
 
-package Latihan5;
+/*
+ * Author : Lisvindanu
+ */
+
+package Latihan6;
 
 public class StrukturList {
     Node head; //node pertama dalam list
@@ -134,6 +138,51 @@ public class StrukturList {
         while(curNode != null) {
             System.out.print(curNode.getData()+ " ");
             curNode = curNode.getNext();
+        }
+    }
+
+    public boolean find(int x) {
+        Node curNode = head;
+        boolean ketemu = false;
+        while (curNode != null && !ketemu) {
+            if (curNode.getData() == x) {
+                ketemu = true;
+            } else {
+                curNode = curNode.getNext();
+            }
+
+        }
+        return ketemu;
+    }
+
+    public int size() {
+        Node curNode = head;
+        int jumlah = 0;
+
+        while(curNode != null) {
+            jumlah = jumlah + 1;
+            curNode = curNode.getNext();
+        }
+        return jumlah;
+    }
+
+//    public void removeAll(){
+//        Node curNode;
+//        if(head != null) {
+//            curNode = head;
+//            while (curNode != null) {
+//                Node posNode = curNode.getNext();
+//                dispose(curNode);
+//                curNode = posNode;
+//            }
+//            head = null;
+//            System.out.println("List Kosong");
+//        }
+//    }
+
+    public void removeSemua() {
+        while(head != null) {
+            removeTail();
         }
     }
 
