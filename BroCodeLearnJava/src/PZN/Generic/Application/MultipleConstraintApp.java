@@ -2,7 +2,8 @@ package PZN.Generic.Application;
 
 public class MultipleConstraintApp {
     public static void main(String[] args) {
-
+     //   Data<Manager> managerData = new Data<>(new Manager()); ERROR manager tidak implement canSayHello
+        Data<VicePresident> vicePresidentData = new Data<>(new VicePresident());
     }
 
     public static interface CanSayHello {
@@ -21,6 +22,22 @@ public class MultipleConstraintApp {
         @Override
         public void sayHello(String name) {
             System.out.println("Hello " + name);
+        }
+    }
+
+    public static class Data<T extends Employee & CanSayHello> {
+        private T data;
+
+        public Data(T data) {
+            this.data = data;
+        }
+
+        public T getData() {
+            return data;
+        }
+
+        public void setData(T data) {
+            this.data = data;
         }
     }
 }
