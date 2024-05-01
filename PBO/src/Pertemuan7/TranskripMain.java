@@ -25,6 +25,7 @@ public class TranskripMain {
         //Create objek TranskripNilai
         TranskripNilai transkrip = new TranskripNilai(mhs);
         transkrip.addKHS(khs);
+
         transkrip.display();
     }
 }

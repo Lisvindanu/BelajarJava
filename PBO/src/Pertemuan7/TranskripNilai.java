@@ -23,10 +23,12 @@ public class TranskripNilai {
         tglCetak = new Date();
     }
 
+
     public void hitungIPK() {
         double totalNilai = 0.0;
         int totalSks = 0;
         for (KartuHasilStudi khs : kartuHasilStudi) {
+            khs.hitungIPS();
             totalNilai += khs.getIps() * khs.getTotalSks();
             totalSks += khs.getTotalSks();
         }
@@ -42,6 +44,7 @@ public class TranskripNilai {
     }
 
     public void display() {
+        hitungIPK();
         System.out.println(mahasiswa.display());
         System.out.println("Tanggal Cetak : " + tglCetak.toString());
         System.out.println("ipk: " + ipk);

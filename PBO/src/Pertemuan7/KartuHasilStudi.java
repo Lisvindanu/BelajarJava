@@ -5,12 +5,8 @@
  */
 
 package Pertemuan7;
-
-
-
 import java.util.ArrayList;
 import java.util.List;
-
 public class KartuHasilStudi {
     private String semester;
     private double ips;
@@ -45,27 +41,21 @@ public class KartuHasilStudi {
             ips = 0.0;
         }
     }
-
     public String getSemester() {
         return semester;
     }
-
     public void setSemester(String semester) {
         this.semester = semester;
     }
-
     public double getIps() {
         return ips;
     }
-
     public void setIps(double ips) {
         this.ips = ips;
     }
-
     public List<MataKuliah> getDaftarMataKuliah() {
         return daftarMataKuliah;
     }
-
     public void setDaftarMataKuliah(List<MataKuliah> daftarMataKuliah) {
         this.daftarMataKuliah = daftarMataKuliah;
     }
@@ -76,6 +66,4 @@ public class KartuHasilStudi {
         }
         return totalSks;
     }
-
-
 }
