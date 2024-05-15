@@ -14,7 +14,7 @@ package Pertemuan9.InheritanceLatihanTugas;
 
 
 public class Jutsu extends Ninja{
-    private String jutsu;
+    private String jutsu ;
 
     public Jutsu(String jutsu, String chakra, String user  ) {
         super(chakra, user );
