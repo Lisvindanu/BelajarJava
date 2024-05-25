@@ -19,6 +19,8 @@ public class myPsVita implements PsVita{
     }
 
 
+
+
     @Override
     public boolean IsCartridgeInserted(String game) {
         this.game = game;
@@ -56,6 +58,8 @@ public class myPsVita implements PsVita{
             System.out.println("game " + game + " merupakan game digital") ;
         }
     }
+
+
 
 }
 
